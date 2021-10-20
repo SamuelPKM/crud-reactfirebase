@@ -1,26 +1,60 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+//import ReactDOM from 'react-dom'
 import { useState, useEffect} from 'react';
 import './App.css';
 import {DB} from './firebase-config'
-import {collection, getDocs} from 'firebase/firestore'
+import {collection, getDocs, addDoc} from 'firebase/firestore'
 
 
 function App() {
+    const [newNname,setnewNname] = useState("");
+    const [newProfesor,setnewProfesor] = useState("");
+    const [newEscuela,setnewEscuela] = useState("");
+    const [newUDA,setnewUDA] = useState("");
+    const [newGrupo,setnewGrupo] = useState("");
+
     const [Usuarios, setUsers] = useState([]);
     const usersCollectionRef = collection(DB, "Usuarios")
 
+    const createUser = async ()=>{
+
+    }
     useEffect(() => {
+
       const getUsers = async() => {
       const data = await getDocs(usersCollectionRef);
-      console.log(data);
+      setUsers (data.docs.map((doc)=>({...doc.data(), id: doc.id})));
       }
 
       getUsers()
     }, []);
 
-    return <div className ="App"></div>;
-    
+    return (<div className ="App">
+
+      <div class="form-group">
+        <label for="">Nickname</label>
+        <input type="text"
+          class="form-control" name="Nickname" id="" aria-describedby="helpId" placeholder="Dame tu nombre de usuario " 
+          onChange={(event) => {setnewNname(event.target.value);
+          }}>
+        </input>
+        <br></br>
+        <small id="helpId" class="form-text text-muted">Aqui debes insertar tu nombre de usuario</small>
+        <br></br>
+        <button type="submit" class="btn btn-primary" onClick={createUser}>Enviar</button>
+      </div>
+
+      {Usuarios.map((Usuarios) => {
+        return <div>
+          <h1>Usuario: {Usuarios.Nickname}</h1>
+          <h1>Escuela: {Usuarios.Escuela}</h1>
+          <h1>Grupo: {Usuarios.Grupo}</h1>
+          <h1>Profesor: {Usuarios.ID_Profesor}</h1>
+          <h1>Unidad: {Usuarios.Unidad}</h1>
+        </div>
+      })}
+    </div>
+    ); 
   }
 
 export default App;
