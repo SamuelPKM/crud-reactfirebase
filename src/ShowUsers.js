@@ -5,7 +5,7 @@ import {collection, getDocs,doc, deleteDoc} from 'firebase/firestore'
 
 function ShowUsers() {
     
-    const usersCollectionRef = collection(DB, "Usuarios")
+    
     const [Usuarios, setUsers] = useState([]);
     const deleteUser = async(id)=>{
       const userDoc = doc(DB,"Usuarios",id);
@@ -13,7 +13,7 @@ function ShowUsers() {
 
     }
     useEffect(() => {
-      
+      const usersCollectionRef = collection(DB, "Usuarios")  
       const getUsers = async() => {
       const data = await getDocs(usersCollectionRef);
       setUsers (data.docs.map((doc)=>({...doc.data(), id: doc.id})));

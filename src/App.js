@@ -1,7 +1,6 @@
 import React from 'react'
 //import ReactDOM from 'react-dom'
-import ShowUsers from './ShowUsers';
-import AddUsers from './AddUsers'
+import BarraNav from './BarraNav';
 
 
 function App() {
@@ -9,10 +8,11 @@ function App() {
    
 
     return (<div className ="App">
-      
-      <ShowUsers/>
+        
+       
+      <BarraNav/>
 
-      <AddUsers/>  
+  
     </div>
     ); 
   }
