@@ -3,7 +3,8 @@ import React from 'react'
 import { useState, useEffect} from 'react';
 import './App.css';
 import {DB} from './firebase-config'
-import {collection, getDocs, addDoc} from 'firebase/firestore'
+import {collection, getDocs, addDoc, doc, deleteDoc} from 'firebase/firestore'
+import bootstrap from 'bootstrap';
 
 
 function App() {
@@ -19,6 +20,11 @@ function App() {
     const createUser = async ()=>{
       //Importante el nombre de los campos, deben mandarse tal cual escritos para poderlos leer en la parte de mostrar nodo
       await addDoc(usersCollectionRef, {Nickname: newNname, Escuela: newEscuela, ID_Profesor: newProfesor, Unidad: newUDA, Grupo: newGrupo})
+    }
+    const deleteUser = async(id)=>{
+      const userDoc = doc(DB,"Usuarios",id);
+      await deleteDoc(userDoc);
+
     }
     useEffect(() => {
 
@@ -89,6 +95,7 @@ function App() {
           <h1>Grupo: {Usuarios.Grupo}</h1>
           <h1>Profesor: {Usuarios.ID_Profesor}</h1>
           <h1>Unidad: {Usuarios.Unidad}</h1>
+          <button onClick={() => {deleteUser(Usuarios.id)}}>Eliminar Usuario</button>
         </div>
       })}
     </div>
